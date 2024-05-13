@@ -21,8 +21,13 @@ public class BackupFiles {
     private static void copyFiles(File sourceDirectory, File destinationDirectory) {
         File[] files = sourceDirectory.listFiles();
 
-        if (files != null) {
+        if (files!= null) {
             for (File file : files) {
+                // Проверяем, не является ли текущий путь копируемой директории
+                if (file.isDirectory() && file.getAbsolutePath().equals(destinationDirectory.getAbsolutePath())) {
+                    continue; // Пропускаем копирование самой директории резервных копий
+                }
+
                 if (file.isDirectory()) {
                     File dir = new File(destinationDirectory, file.getName());
                     dir.mkdir();
@@ -37,5 +42,6 @@ public class BackupFiles {
             }
         }
     }
+
 }
 
